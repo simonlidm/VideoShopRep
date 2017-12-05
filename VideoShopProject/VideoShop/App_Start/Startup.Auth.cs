@@ -60,8 +60,8 @@ namespace VideoShop
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "396446225499-gul8r5d98og5gjhu3ups803f10afo181.apps.googleusercontent.com",
-                ClientSecret = "_WlihCj5ZATs192WZvX5oRuG"
+                ClientId = "501704433227-85jo5eh8n7ipss67stksfd3qvu15njqo.apps.googleusercontent.com",
+                ClientSecret = "mrZ-Vw2IDfkGiymNo7kwVeKn"
             });
         }
     }
