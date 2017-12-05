@@ -58,11 +58,11 @@ namespace VideoShop
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "396446225499-gul8r5d98og5gjhu3ups803f10afo181.apps.googleusercontent.com",
+                ClientSecret = "_WlihCj5ZATs192WZvX5oRuG"
+            });
         }
     }
 }
