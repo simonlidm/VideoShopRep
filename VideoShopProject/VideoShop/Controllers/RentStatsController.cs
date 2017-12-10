@@ -64,29 +64,37 @@ namespace VideoShop.Controllers
                 conn();
                 con.Open();
                 SqlCommand cmd = new SqlCommand("ValidateRent", con);
+                SqlCommand cmd2 = new SqlCommand("ValidateRent2", con);
                 cmd.CommandType = CommandType.StoredProcedure;
               
                
                 SqlDataReader rdr = cmd.ExecuteReader();
-                if (db.RentStats.Any(e => e.EndDate >= date) && rdr.HasRows)
+                
+                if (rdr.HasRows)
                 {
                   
                     rdr.Close();
-                    con.Close();
+                    SqlDataReader rdr2 = cmd2.ExecuteReader();
+                    if (rdr2.HasRows)
+                    {
+                        TempData["message"] = "The movie is already being rented!";
+                        rdr2.Close();
+                        con.Close();
+                        return RedirectToAction("Index");
+                    }
 
-                    
-                    TempData["message"] = "The movie is already being rented!";
 
-                    return RedirectToAction("Index");
+                    else
+                    {
+                        rdr.Close();
+                        con.Close();
+                        db.RentStats.Add(rentStats);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+
                 }
-                else
-                {
-                    rdr.Close();
-                    con.Close();
-                    db.RentStats.Add(rentStats);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+               
                
 
             }
