@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -13,7 +14,12 @@ namespace VideoShop.Controllers
     public class RentStatsController : Controller
     {
         private MovieDatabaseEntities db = new MovieDatabaseEntities();
-
+        private SqlConnection con;
+        private void conn()
+        {
+            string connStr = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            con =new SqlConnection(connStr);
+        }
         // GET: RentStats
         public ActionResult Index()
         {
@@ -41,7 +47,7 @@ namespace VideoShop.Controllers
         {
           
             ViewBag.CustomerId = new SelectList(db.Customer, "CustomerId", "FirstName");
-            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title").OrderBy(x=>x.Text);
+            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title").Take(10000).OrderBy(x=>x.Text);
             return View();
         }
 
@@ -54,9 +60,35 @@ namespace VideoShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.RentStats.Add(rentStats);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                DateTime date = DateTime.Now;
+                conn();
+                con.Open();
+                SqlCommand cmd = new SqlCommand("ValidateRent", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+              
+               
+                SqlDataReader rdr = cmd.ExecuteReader();
+                if (db.RentStats.Any(e => e.EndDate >= date) && rdr.HasRows)
+                {
+                  
+                    rdr.Close();
+                    con.Close();
+
+                    
+                    TempData["message"] = "The movie is already being rented!";
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    rdr.Close();
+                    con.Close();
+                    db.RentStats.Add(rentStats);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+               
+
             }
 
             ViewBag.CustomerId = new SelectList(db.Customer, "CustomerId", "FirstName", rentStats.CustomerId);
