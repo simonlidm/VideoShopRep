@@ -61,45 +61,10 @@ namespace VideoShop.Controllers
             if (ModelState.IsValid)
             {
                 
-                conn();
-                con.Open();
-                SqlCommand cmd = new SqlCommand("ValidateRent", con);
-                SqlCommand cmd2 = new SqlCommand("ValidateRent2", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-              
                
-                SqlDataReader rdr = cmd.ExecuteReader();
-                
-                if (rdr.HasRows)
-                {
-                    
-                    rdr.Close();
-                    SqlDataReader rdr2 = cmd2.ExecuteReader();
-                    if (rdr2.HasRows)
-                    {
-                        TempData["message"] = "The movie is already being rented!";
-                        rdr2.Close();
-                        con.Close();
-                        return RedirectToAction("Index");
-                    }
-
-
-                    else
-                    {
-                        rdr.Close();
-                        con.Close();
-                        db.RentStats.Add(rentStats);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-
-                }
-                else
-                {
 
                     try{
-                        rdr.Close();
-                        con.Close();
+                       
                         db.RentStats.Add(rentStats);
                         db.SaveChanges();
                     }
@@ -110,7 +75,7 @@ namespace VideoShop.Controllers
                     
                     
                     return RedirectToAction("Index");
-                }
+                
 
 
             }
