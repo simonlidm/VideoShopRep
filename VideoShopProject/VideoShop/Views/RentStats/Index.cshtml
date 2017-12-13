@@ -5,7 +5,9 @@
 }
 
 <h2>Rented Movies</h2>
-<h3><font color="red">@TempData["message"]</font></h3>
+<div class="alert-danger fade in"><a href="https://localhost:44381/RentStats"  class="close" data-dismiss="alert">&times;</a>
+    <strong>@TempData["message"]</strong>
+    </div>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>

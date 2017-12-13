@@ -15,6 +15,7 @@ namespace VideoShop.Controllers
     {
         private MovieDatabaseEntities db = new MovieDatabaseEntities();
         private SqlConnection con;
+       
         private void conn()
         {
             string connStr = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
@@ -60,11 +61,11 @@ namespace VideoShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                
+                
+                    try
+                    {
 
-                    try{
-                       
                         db.RentStats.Add(rentStats);
                         db.SaveChanges();
                     }
@@ -72,9 +73,10 @@ namespace VideoShop.Controllers
                     {
                         TempData["message"] = "The movie is already being rented!";
                     }
-                    
-                    
                     return RedirectToAction("Index");
+                
+               
+                 
                 
 
 
