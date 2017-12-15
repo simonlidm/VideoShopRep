@@ -11,9 +11,9 @@
 </p>
 <form id="formSearch" method="post">
 <div class="row" align="right" id="SearchBox">
-    <div class="col-md-1">Title</div>
-    <div class="col-md-2"><input type="text" id="Title" name="Title" /></div>
-    <div class="col-md-1"><input type="submit" id="submitsearch" value="Search" /></div>
+    <div class="col-md-2">Title</div>
+    <div class="col-md-3"><input type="text" id="Title" name="Title" /></div>
+    <div class="col-md-2"><input type="submit" id="submitsearch" value="Search" /></div>
 </div>
     </form>
 <table class="table">
@@ -31,6 +31,7 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
+         
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MovieId }) |

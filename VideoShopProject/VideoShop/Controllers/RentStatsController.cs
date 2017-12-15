@@ -51,7 +51,31 @@ namespace VideoShop.Controllers
             ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title").Take(10000).OrderBy(x=>x.Text);
             return View();
         }
+        private bool ValidateDate(RentStats rentStats)
+        {
+            bool error = false;
+           
 
+            if (db.RentStats.Any(x=>x.EndDate >= rentStats.StartDate)&&db.RentStats.Any(x=>x.MovieId==rentStats.MovieId) )
+                {
+               
+                    error =true;
+                TempData["message"] = "The movie is already being rented!";
+
+            }
+            if (db.RentStats.Any(x=>x.MovieId == rentStats.MovieId && x.StartDate == rentStats.StartDate && x.EndDate == rentStats.EndDate))
+            {
+
+                error = true;
+                TempData["message"] = "This rental is a duplicate and already exist";
+            }
+            if (rentStats.StartDate < DateTime.Now.Date || rentStats.StartDate > DateTime.Now.Date || rentStats.EndDate>DateTime.Now.Date.AddDays(2))
+            {
+                error = true;
+                TempData["message"] = "Invalid date!";
+            }
+            return error;
+        }
         // POST: RentStats/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -61,8 +85,9 @@ namespace VideoShop.Controllers
         {
             if (ModelState.IsValid)
             {
-               
-                
+
+                if (!ValidateDate(rentStats))
+                {
                     try
                     {
 
@@ -71,9 +96,11 @@ namespace VideoShop.Controllers
                     }
                     catch (Exception)
                     {
-                        TempData["message"] = "The movie is already being rented!";
+                        TempData["message"] = "Error occured,try again!";
                     }
-                    return RedirectToAction("Index");
+                }
+              
+                return RedirectToAction("Index");
                 
                
                  
@@ -86,6 +113,7 @@ namespace VideoShop.Controllers
             ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title", rentStats.MovieId);
             return View(rentStats);
         }
+  
 
         // GET: RentStats/Edit/5
         public ActionResult Edit(int? id)
