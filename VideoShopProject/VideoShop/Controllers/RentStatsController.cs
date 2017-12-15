@@ -48,7 +48,7 @@ namespace VideoShop.Controllers
         {
           
             ViewBag.CustomerId = new SelectList(db.Customer, "CustomerId", "FirstName");
-            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title").Take(10000).OrderBy(x=>x.Text);
+            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title").OrderBy(x=>x.Text);
             return View();
         }
         private bool ValidateDate(RentStats rentStats)
