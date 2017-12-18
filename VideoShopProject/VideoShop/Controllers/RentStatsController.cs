@@ -55,9 +55,8 @@ namespace VideoShop.Controllers
         private bool ValidateDate(RentStats rentStats)
         {
             bool error = false;
-            if (db.RentReturn.Any(x=>x.RentStats.MovieId == rentStats.MovieId && x.RentStats.StartDate >= rentStats.StartDate && x.RentStats.EndDate <= rentStats.EndDate ))
-            {
-                if (db.RentStats.Any(x => x.EndDate >= rentStats.StartDate && x.MovieId == rentStats.MovieId))
+           
+                if (db.RentStats.Any(x => x.EndDate >= rentStats.StartDate && x.MovieId == rentStats.MovieId&&x.CustomerId==rentStats.CustomerId))
                 {
 
                     error = true;
@@ -66,7 +65,7 @@ namespace VideoShop.Controllers
 
 
                 }
-                if (db.RentStats.Any(x => x.MovieId == rentStats.MovieId && x.StartDate == rentStats.StartDate && x.EndDate == rentStats.EndDate))
+                if (db.RentStats.Any(x => x.MovieId == rentStats.MovieId && x.StartDate == rentStats.StartDate && x.EndDate == rentStats.EndDate&&x.CustomerId ==rentStats.CustomerId))
                 {
 
 
@@ -84,7 +83,7 @@ namespace VideoShop.Controllers
 
 
                 }
-            }
+            
             return error;
         }
         // POST: RentStats/Create
