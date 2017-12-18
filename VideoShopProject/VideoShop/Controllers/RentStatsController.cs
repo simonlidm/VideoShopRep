@@ -51,28 +51,39 @@ namespace VideoShop.Controllers
             ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title").OrderBy(x=>x.Text);
             return View();
         }
+   
         private bool ValidateDate(RentStats rentStats)
         {
             bool error = false;
-           
-
-            if (db.RentStats.Any(x=>x.EndDate >= rentStats.StartDate)&&db.RentStats.Any(x=>x.MovieId==rentStats.MovieId) )
+            if (db.RentReturn.Any(x=>x.RentStats.MovieId == rentStats.MovieId && x.RentStats.StartDate >= rentStats.StartDate && x.RentStats.EndDate <= rentStats.EndDate ))
+            {
+                if (db.RentStats.Any(x => x.EndDate >= rentStats.StartDate && x.MovieId == rentStats.MovieId))
                 {
-               
-                    error =true;
-                TempData["message"] = "The movie is already being rented!";
 
-            }
-            if (db.RentStats.Any(x=>x.MovieId == rentStats.MovieId && x.StartDate == rentStats.StartDate && x.EndDate == rentStats.EndDate))
-            {
+                    error = true;
+                    TempData["message"] = "The movie is already being rented!";
 
-                error = true;
-                TempData["message"] = "This rental is a duplicate and already exist";
-            }
-            if (rentStats.StartDate < DateTime.Now.Date || rentStats.StartDate > DateTime.Now.Date || rentStats.EndDate>DateTime.Now.Date.AddDays(2))
-            {
-                error = true;
-                TempData["message"] = "Invalid date!";
+
+
+                }
+                if (db.RentStats.Any(x => x.MovieId == rentStats.MovieId && x.StartDate == rentStats.StartDate && x.EndDate == rentStats.EndDate))
+                {
+
+
+                    error = true;
+                    TempData["message"] = "This rental is a duplicate and already exist";
+
+
+                }
+                if (rentStats.StartDate < DateTime.Now.Date || rentStats.StartDate > DateTime.Now.Date)
+                {
+
+
+                    error = true;
+                    TempData["message"] = "Invalid date!";
+
+
+                }
             }
             return error;
         }
