@@ -1,0 +1,59 @@
+﻿@model IEnumerable<VideoShop.Models.RentStats>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Rented Movies</h2>
+<div class="alert-danger fade in"><a href="https://localhost:44381/RentStats"  class="close" data-dismiss="alert">&times;</a>
+    <strong>@TempData["message"]</strong>
+    </div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Movie.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Movie.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RentId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RentId }) 
+          
+        </td>
+    </tr>
+}
+
+</table>
