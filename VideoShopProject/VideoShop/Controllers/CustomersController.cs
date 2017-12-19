@@ -15,6 +15,7 @@ namespace VideoShop.Controllers
         private MovieDatabaseEntities db = new MovieDatabaseEntities();
 
         // GET: Customers
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Customer.ToList());

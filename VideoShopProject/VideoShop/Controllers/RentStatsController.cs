@@ -22,13 +22,14 @@ namespace VideoShop.Controllers
             con =new SqlConnection(connStr);
         }
         // GET: RentStats
+        [Authorize]
         public ActionResult Index()
         {
             var rentStats = db.RentStats.Include(r => r.Customer).Include(r => r.Movie);
             return View(rentStats.ToList());
         }
        
-       
+
         // GET: RentStats/Details/5
         public ActionResult Details(int? id)
         {
