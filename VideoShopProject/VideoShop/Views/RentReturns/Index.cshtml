@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<VideoShop.Models.RentReturn>
-
+<style>
+    .highlighted {
+        background-color:rgba(255, 0,0,0.6);
+    }
+</style>
 @{
     ViewBag.Title = "Index";
 }
@@ -32,8 +36,11 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+@foreach (var item in Model)
+{
+    if ( DateTime.Now.Date > item.RentStats.EndDate)
+    {
+    <tr class="highlighted">
         <td>
             @Html.DisplayFor(model => item.RentStats.RentId)
         </td>
@@ -54,10 +61,39 @@
         </td>
         <td>
            
-            @Html.ActionLink("Details", "Details", new { id=item.ReturnId }) |
-            @Html.ActionLink("Return Movie", "Delete", new { id=item.ReturnId })
+            @Html.ActionLink("Details", "Details", new { id = item.ReturnId }) |
+            @Html.ActionLink("Return Movie", "Delete", new { id = item.ReturnId })
         </td>
     </tr>
+    }
+    else
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.RentStats.RentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentStats.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentStats.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentStats.Customer.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentStats.Customer.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentStats.Movie.Title)
+            </td>
+            <td>
+
+                @Html.ActionLink("Details", "Details", new { id = item.ReturnId }) |
+                @Html.ActionLink("Return Movie", "Delete", new { id = item.ReturnId })
+            </td>
+        </tr>
+    }
 }
 
 </table>

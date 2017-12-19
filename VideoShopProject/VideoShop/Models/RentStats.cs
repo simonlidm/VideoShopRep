@@ -19,7 +19,7 @@ namespace VideoShop.Models
         {
             this.RentReturn = new HashSet<RentReturn>();
         }
-    
+        public bool isHighlighted { get; set; }
         public int RentId { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public Nullable<int> MovieId { get; set; }

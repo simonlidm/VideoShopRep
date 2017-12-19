@@ -27,7 +27,8 @@ namespace VideoShop.Controllers
             var rentStats = db.RentStats.Include(r => r.Customer).Include(r => r.Movie);
             return View(rentStats.ToList());
         }
-
+       
+       
         // GET: RentStats/Details/5
         public ActionResult Details(int? id)
         {
@@ -56,21 +57,26 @@ namespace VideoShop.Controllers
         {
             bool error = false;
            
-                if (db.RentStats.Any(x => x.EndDate >= rentStats.StartDate && x.MovieId == rentStats.MovieId&&x.CustomerId==rentStats.CustomerId))
+                if (db.RentStats.Any(x => x.EndDate >= rentStats.StartDate && x.MovieId == rentStats.MovieId&&x.CustomerId==rentStats.CustomerId) )
                 {
-
+              
+                
                     error = true;
                     TempData["message"] = "The movie is already being rented!";
+                
+                  
 
 
 
                 }
                 if (db.RentStats.Any(x => x.MovieId == rentStats.MovieId && x.StartDate == rentStats.StartDate && x.EndDate == rentStats.EndDate&&x.CustomerId ==rentStats.CustomerId))
                 {
-
-
+             
+               
                     error = true;
                     TempData["message"] = "This rental is a duplicate and already exist";
+                
+                
 
 
                 }

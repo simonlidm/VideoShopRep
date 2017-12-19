@@ -1,5 +1,13 @@
 ﻿@model IEnumerable<VideoShop.Models.RentStats>
-
+<style>    .highlighted {
+        background-color: rgba(255, 0,0,0.6);
+        
+    }</style>
+<style>
+    .highlighted2 {
+        background-color: rgba(0, 255,0,0.3);
+    }
+</style>
 @{
     ViewBag.Title = "Index";
 }
@@ -12,6 +20,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
+    
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.StartDate)
@@ -31,8 +40,36 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+@foreach (var item in Model)
+{
+    if (DateTime.Now.Date > item.EndDate)
+    {
+        <tr class="highlighted">
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Movie.Title)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.RentId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RentId })
+
+            </td>
+        </tr>
+    }
+    else
+    {
+    <tr class="highlighted2">
         <td>
             @Html.DisplayFor(modelItem => item.StartDate)
         </td>
@@ -49,11 +86,12 @@
             @Html.DisplayFor(modelItem => item.Movie.Title)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RentId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RentId }) 
+            @Html.ActionLink("Edit", "Edit", new { id = item.RentId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.RentId }) 
           
         </td>
     </tr>
+    }
 }
 
 </table>
