@@ -22,7 +22,7 @@ namespace VideoShop.Controllers
             con =new SqlConnection(connStr);
         }
         // GET: RentStats
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         public ActionResult Index()
         {
             var rentStats = db.RentStats.Include(r => r.Customer).Include(r => r.Movie);

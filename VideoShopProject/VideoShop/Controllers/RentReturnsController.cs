@@ -15,7 +15,7 @@ namespace VideoShop.Controllers
         private MovieDatabaseEntities db = new MovieDatabaseEntities();
 
         // GET: RentReturns
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var rentReturn = db.RentReturn.Include(r => r.RentStats);
