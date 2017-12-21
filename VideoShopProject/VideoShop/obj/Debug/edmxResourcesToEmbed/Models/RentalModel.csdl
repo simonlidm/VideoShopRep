@@ -26,13 +26,6 @@
     <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="RentStats" Relationship="Self.FK_RentStats_Movie" FromRole="Movie" ToRole="RentStats" />
   </EntityType>
-  <EntityType Name="Movies">
-    <Key>
-      <PropertyRef Name="MovieId" />
-    </Key>
-    <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
   <EntityType Name="RentReturn">
     <Key>
       <PropertyRef Name="ReturnId" />
@@ -93,7 +86,6 @@
   <EntityContainer Name="MovieDatabaseEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Customer" EntityType="Self.Customer" />
     <EntitySet Name="Movie" EntityType="Self.Movie" />
-    <EntitySet Name="Movies" EntityType="Self.Movies" />
     <EntitySet Name="RentReturn" EntityType="Self.RentReturn" />
     <EntitySet Name="RentStats" EntityType="Self.RentStats" />
     <AssociationSet Name="FK_RentStats_Customer" Association="Self.FK_RentStats_Customer">

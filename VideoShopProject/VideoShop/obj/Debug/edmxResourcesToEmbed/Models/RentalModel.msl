@@ -27,14 +27,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Movies">
-      <EntityTypeMapping TypeName="MovieDatabaseModel.Movies">
-        <MappingFragment StoreEntitySet="Movies">
-          <ScalarProperty Name="MovieId" ColumnName="MovieId" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="RentReturn">
       <EntityTypeMapping TypeName="MovieDatabaseModel.RentReturn">
         <MappingFragment StoreEntitySet="RentReturn">

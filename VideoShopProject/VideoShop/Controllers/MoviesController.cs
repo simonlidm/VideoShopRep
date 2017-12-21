@@ -16,16 +16,18 @@ namespace VideoShop.Controllers
 
         // GET: Movies
         [Authorize(Roles ="ExternalUser,Admin")]
-        [HttpGet]
+       
         public ActionResult Index()
         {
-            return View(db.Movie.ToList().Take(100));   
+            return View();   
         }
-        [HttpPost]
-        public ActionResult Index(string Title,Movie movie)
+       
+        public JsonResult GetTitle(string term)
         {
-            var titles = db.Movie.ToList().Where(t => t.Title.StartsWith(Title));
-            return View(titles);
+            var titles = from t in db.Movie
+                         where t.Title.ToLower().StartsWith(term)
+                         select t.Title;
+            return Json(titles,JsonRequestBehavior.AllowGet);
         }
         public ActionResult OrderByTitle()
         {
