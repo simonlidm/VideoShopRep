@@ -27,7 +27,6 @@ namespace VideoShop.Models
     
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<Movie> Movie { get; set; }
-        public virtual DbSet<Movies> Movies { get; set; }
         public virtual DbSet<RentReturn> RentReturn { get; set; }
         public virtual DbSet<RentStats> RentStats { get; set; }
     }

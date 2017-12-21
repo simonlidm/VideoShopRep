@@ -29,13 +29,6 @@
           <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar(max)" />
         </EntityType>
-        <EntityType Name="Movies">
-          <Key>
-            <PropertyRef Name="MovieId" />
-          </Key>
-          <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar(max)" />
-        </EntityType>
         <EntityType Name="RentReturn">
           <Key>
             <PropertyRef Name="ReturnId" />
@@ -92,7 +85,6 @@
         <EntityContainer Name="MovieDatabaseModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RentReturn" EntityType="Self.RentReturn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RentStats" EntityType="Self.RentStats" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_RentReturn_RentStats" Association="Self.FK_RentReturn_RentStats">
@@ -138,13 +130,6 @@
           <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="RentStats" Relationship="Self.FK_RentStats_Movie" FromRole="Movie" ToRole="RentStats" />
-        </EntityType>
-        <EntityType Name="Movies">
-          <Key>
-            <PropertyRef Name="MovieId" />
-          </Key>
-          <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RentReturn">
           <Key>
@@ -206,7 +191,6 @@
         <EntityContainer Name="MovieDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customer" EntityType="Self.Customer" />
           <EntitySet Name="Movie" EntityType="Self.Movie" />
-          <EntitySet Name="Movies" EntityType="Self.Movies" />
           <EntitySet Name="RentReturn" EntityType="Self.RentReturn" />
           <EntitySet Name="RentStats" EntityType="Self.RentStats" />
           <AssociationSet Name="FK_RentStats_Customer" Association="Self.FK_RentStats_Customer">
@@ -249,14 +233,6 @@
           <EntitySetMapping Name="Movie">
             <EntityTypeMapping TypeName="MovieDatabaseModel.Movie">
               <MappingFragment StoreEntitySet="Movie">
-                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Movies">
-            <EntityTypeMapping TypeName="MovieDatabaseModel.Movies">
-              <MappingFragment StoreEntitySet="Movies">
                 <ScalarProperty Name="MovieId" ColumnName="MovieId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>

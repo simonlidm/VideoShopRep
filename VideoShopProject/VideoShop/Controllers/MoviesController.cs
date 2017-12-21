@@ -15,7 +15,7 @@ namespace VideoShop.Controllers
         private MovieDatabaseEntities db = new MovieDatabaseEntities();
 
         // GET: Movies
-        [Authorize(Roles ="ExternalUser")]
+        [Authorize(Roles ="ExternalUser,Admin")]
         [HttpGet]
         public ActionResult Index()
         {
