@@ -56,7 +56,7 @@ namespace VideoShop.Controllers
         {
           
             ViewBag.CustomerId = new SelectList(db.Customer, "CustomerId", "FirstName");
-            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title").OrderBy(x=>x.Text);
+            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title").OrderBy(x=>x.Text).Skip(10000).Take(10000);
             return View();
         }
    
