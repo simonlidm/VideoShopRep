@@ -28,8 +28,14 @@ namespace VideoShop.Controllers
             var rentStats = db.RentStats.Include(r => r.Customer).Include(r => r.Movie);
             return View(rentStats.ToList());
         }
-       
 
+        public JsonResult GetTitle(string term)
+        {
+            var titles = from t in db.Movie
+                         where t.Title.ToLower().StartsWith(term)
+                         select t.Title;
+            return Json(titles, JsonRequestBehavior.AllowGet);
+        }
         // GET: RentStats/Details/5
         public ActionResult Details(int? id)
         {

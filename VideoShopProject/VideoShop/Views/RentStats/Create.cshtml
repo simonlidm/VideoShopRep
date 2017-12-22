@@ -65,7 +65,14 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#getvalue').autocomplete({
+            source: '@Url.Action("GetTitle")'
+        });
+    })
+</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jqueryui")
 }

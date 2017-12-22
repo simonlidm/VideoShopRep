@@ -29,10 +29,13 @@ namespace VideoShop
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
             bundles.Add(new ScriptBundle("~/Content/themes/base/css").Include(
-                       "~/Content/themes/base/jquery.ui.core.css",
-                      "~/ Content/themes/base/jquery.ui.autocomplete.css",
-                      "~/Content/themes/base/jquery.ui.theme.css",
-                      "~/Content/themes/base/jquery.ui.jquery-ui.css"));
+                       "~/Content/themes/base/ui.core.css",
+                      "~/ Content/themes/base/autocomplete.css",
+                      "~/Content/themes/base/theme.css",
+                      "~/Content/themes/base/jquery-ui.css",
+                      "~/Content/themes/base/menu.css",
+                      "~/Content/themes/base/button.css",
+                      "~/Content/themes/base/jquery-ui.min.css"));
         }
     }
 }
