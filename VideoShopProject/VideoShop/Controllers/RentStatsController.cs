@@ -63,7 +63,8 @@ namespace VideoShop.Controllers
         {
             bool error = false;
            
-                if (db.RentStats.Any(x => x.EndDate >= rentStats.StartDate && x.MovieId == rentStats.MovieId&&x.CustomerId==rentStats.CustomerId) )
+                if (db.RentStats.Any(x => x.EndDate >= rentStats.StartDate && x.MovieId == rentStats.MovieId&&x.CustomerId==rentStats.CustomerId
+                )|| db.RentStats.Any(x=>x.MovieId == rentStats.MovieId && x.EndDate >= rentStats.StartDate) )
                 {
               
                 
@@ -108,6 +109,7 @@ namespace VideoShop.Controllers
             if (ModelState.IsValid)
             {
                 rentStats.StartDate = DateTime.Now.Date;
+                rentStats.StartDatetime = DateTime.Now;
                 if (!ValidateDate(rentStats))
                 {
                     try
@@ -121,18 +123,7 @@ namespace VideoShop.Controllers
                     {
                         TempData["message"] = "Error occured,try again!";
                     }
-                    using (SqlConnection con = new SqlConnection(connStr))
-                    {
-                        using (SqlCommand cmd = new SqlCommand("UpdateStartTime", con))
-                        {
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.Add("@RentID", SqlDbType.Int).Value = rentStats.RentId;
-                      
-                            cmd.Parameters.Add("@StartTime", SqlDbType.DateTime).Value = DateTime.Now;
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
+                    
                 }
               
                 return RedirectToAction("Index");
