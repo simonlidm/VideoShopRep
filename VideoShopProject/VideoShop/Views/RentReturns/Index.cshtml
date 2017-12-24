@@ -1,0 +1,63 @@
+﻿@model IEnumerable<VideoShop.Models.RentReturn>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Movie Returns</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RentStats.RentId)
+        </th>
+
+       
+        <th>
+            @Html.DisplayNameFor(model => model.RentStats.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentStats.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentStats.Customer.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentStats.Customer.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentStats.Movie.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(model => item.RentStats.RentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentStats.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentStats.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentStats.Customer.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentStats.Customer.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentStats.Movie.Title)
+        </td>
+        <td>
+           
+            @Html.ActionLink("Details", "Details", new { id=item.ReturnId }) |
+            @Html.ActionLink("Return Movie", "Delete", new { id=item.ReturnId })
+        </td>
+    </tr>
+}
+
+</table>
