@@ -41,11 +41,13 @@
     <Property Name="RentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CustomerId" Type="Int32" />
     <Property Name="MovieId" Type="Int32" />
-    <Property Name="StartDate" Type="DateTime" Precision="0" />
-    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" Nullable="false" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" Nullable="false" />
     <NavigationProperty Name="Customer" Relationship="Self.FK_RentStats_Customer" FromRole="RentStats" ToRole="Customer" />
     <NavigationProperty Name="Movie" Relationship="Self.FK_RentStats_Movie" FromRole="RentStats" ToRole="Movie" />
     <NavigationProperty Name="RentReturn" Relationship="Self.FK_RentReturn_RentStats" FromRole="RentStats" ToRole="RentReturn" />
+    <Property Name="StartDatetime" Type="DateTime" Precision="3" />
+    <Property Name="EndDatetime" Type="DateTime" Precision="3" />
   </EntityType>
   <Association Name="FK_RentStats_Customer">
     <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />

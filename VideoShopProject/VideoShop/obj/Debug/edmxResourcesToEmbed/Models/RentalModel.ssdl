@@ -36,10 +36,12 @@
       <PropertyRef Name="RentId" />
     </Key>
     <Property Name="RentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CustomerId" Type="int" />
     <Property Name="MovieId" Type="int" />
-    <Property Name="StartDate" Type="date" />
-    <Property Name="EndDate" Type="date" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" Nullable="false" />
+    <Property Name="StartDatetime" Type="datetime" />
+    <Property Name="EndDatetime" Type="datetime" />
   </EntityType>
   <Association Name="FK_RentReturn_RentStats">
     <End Role="RentStats" Type="Self.RentStats" Multiplicity="0..1" />

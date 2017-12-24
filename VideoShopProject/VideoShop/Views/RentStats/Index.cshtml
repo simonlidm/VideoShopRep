@@ -23,16 +23,19 @@
     
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StartDate)
+            Start Date
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndDate)
+            End Date
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Customer.FirstName)
+           Return Time
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Customer.LastName)
+            First Name
+        </th>
+        <th>
+            Last Name
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Movie.Title)
@@ -46,10 +49,13 @@
     {
         <tr class="highlighted">
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
+                @Html.DisplayFor(modelItem => item.StartDatetime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDatetime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Customer.FirstName)
@@ -71,10 +77,13 @@
     {
     <tr class="highlighted2">
         <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
+            @Html.DisplayFor(modelItem => item.StartDatetime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDatetime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Customer.FirstName)

@@ -14,13 +14,12 @@ namespace VideoShop.Controllers
     public class RentStatsController : Controller
     {
         private MovieDatabaseEntities db = new MovieDatabaseEntities();
-        private SqlConnection con;
+     
        
-        private void conn()
-        {
+       
             string connStr = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-            con =new SqlConnection(connStr);
-        }
+           
+        
         // GET: RentStats
         [Authorize(Roles ="Admin")]
         public ActionResult Index()
@@ -108,18 +107,31 @@ namespace VideoShop.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                rentStats.StartDate = DateTime.Now.Date;
                 if (!ValidateDate(rentStats))
                 {
                     try
                     {
-
+                 
                         db.RentStats.Add(rentStats);
                         db.SaveChanges();
+
                     }
                     catch (Exception)
                     {
                         TempData["message"] = "Error occured,try again!";
+                    }
+                    using (SqlConnection con = new SqlConnection(connStr))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("UpdateStartTime", con))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add("@RentID", SqlDbType.Int).Value = rentStats.RentId;
+                      
+                            cmd.Parameters.Add("@StartTime", SqlDbType.DateTime).Value = DateTime.Now;
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                 }
               
@@ -151,7 +163,7 @@ namespace VideoShop.Controllers
                 return HttpNotFound();
             }
             ViewBag.CustomerId = new SelectList(db.Customer, "CustomerId", "FirstName", rentStats.CustomerId);
-            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title", rentStats.MovieId);
+            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title", rentStats.MovieId).OrderBy(x => x.Text).Skip(10000).Take(10000);
             return View(rentStats);
         }
 
@@ -169,7 +181,7 @@ namespace VideoShop.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CustomerId = new SelectList(db.Customer, "CustomerId", "FirstName", rentStats.CustomerId);
-            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title", rentStats.MovieId);
+            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title", rentStats.MovieId).OrderBy(x => x.Text).Skip(10000).Take(10000);
             return View(rentStats);
         }
 

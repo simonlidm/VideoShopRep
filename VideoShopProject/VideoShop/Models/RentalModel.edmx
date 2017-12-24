@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MovieDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MovieDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -41,10 +41,12 @@
             <PropertyRef Name="RentId" />
           </Key>
           <Property Name="RentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerId" Type="int" />
           <Property Name="MovieId" Type="int" />
-          <Property Name="StartDate" Type="date" />
-          <Property Name="EndDate" Type="date" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="StartDatetime" Type="datetime" />
+          <Property Name="EndDatetime" Type="datetime" />
         </EntityType>
         <Association Name="FK_RentReturn_RentStats">
           <End Role="RentStats" Type="Self.RentStats" Multiplicity="0..1" />
@@ -100,8 +102,7 @@
             <End Role="RentStats" EntitySet="RentStats" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MovieDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -146,11 +147,13 @@
           <Property Name="RentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerId" Type="Int32" />
           <Property Name="MovieId" Type="Int32" />
-          <Property Name="StartDate" Type="DateTime" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" Nullable="false" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_RentStats_Customer" FromRole="RentStats" ToRole="Customer" />
           <NavigationProperty Name="Movie" Relationship="Self.FK_RentStats_Movie" FromRole="RentStats" ToRole="Movie" />
           <NavigationProperty Name="RentReturn" Relationship="Self.FK_RentReturn_RentStats" FromRole="RentStats" ToRole="RentReturn" />
+          <Property Name="StartDatetime" Type="DateTime" Precision="3" />
+          <Property Name="EndDatetime" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_RentStats_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
@@ -249,6 +252,8 @@
           <EntitySetMapping Name="RentStats">
             <EntityTypeMapping TypeName="MovieDatabaseModel.RentStats">
               <MappingFragment StoreEntitySet="RentStats">
+                <ScalarProperty Name="EndDatetime" ColumnName="EndDatetime" />
+                <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
                 <ScalarProperty Name="RentId" ColumnName="RentId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="MovieId" ColumnName="MovieId" />

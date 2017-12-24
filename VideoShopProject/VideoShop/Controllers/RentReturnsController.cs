@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -13,7 +14,10 @@ namespace VideoShop.Controllers
     public class RentReturnsController : Controller
     {
         private MovieDatabaseEntities db = new MovieDatabaseEntities();
+  
+        private string connStr = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
 
+      
         // GET: RentReturns
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
@@ -116,6 +120,22 @@ namespace VideoShop.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             RentReturn rentReturn = db.RentReturn.Find(id);
+           
+            if(db.RentStats.Any(x=>x.RentId == rentReturn.RentId && DateTime.Now <= x.EndDate))
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("UpdateOnReturn", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@RentID", SqlDbType.Int).Value = rentReturn.RentId;
+                        cmd.Parameters.Add("@EndDate", SqlDbType.Date).Value = DateTime.Now.Date.AddDays(-1);
+                        cmd.Parameters.Add("@EndTime", SqlDbType.DateTime).Value = DateTime.Now;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
             db.RentReturn.Remove(rentReturn);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -38,6 +38,8 @@
     <EntitySetMapping Name="RentStats">
       <EntityTypeMapping TypeName="MovieDatabaseModel.RentStats">
         <MappingFragment StoreEntitySet="RentStats">
+          <ScalarProperty Name="EndDatetime" ColumnName="EndDatetime" />
+          <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
           <ScalarProperty Name="RentId" ColumnName="RentId" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="MovieId" ColumnName="MovieId" />

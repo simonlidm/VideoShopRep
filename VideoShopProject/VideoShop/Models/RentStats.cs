@@ -23,8 +23,10 @@ namespace VideoShop.Models
         public int RentId { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public Nullable<int> MovieId { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
+        public Nullable<System.DateTime> StartDatetime { get; set; }
+        public Nullable<System.DateTime> EndDatetime { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Movie Movie { get; set; }
