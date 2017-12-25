@@ -27,14 +27,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Movies">
-      <EntityTypeMapping TypeName="MovieDatabaseModel.Movies">
-        <MappingFragment StoreEntitySet="Movies">
-          <ScalarProperty Name="MovieId" ColumnName="MovieId" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="RentReturn">
       <EntityTypeMapping TypeName="MovieDatabaseModel.RentReturn">
         <MappingFragment StoreEntitySet="RentReturn">
@@ -46,6 +38,8 @@
     <EntitySetMapping Name="RentStats">
       <EntityTypeMapping TypeName="MovieDatabaseModel.RentStats">
         <MappingFragment StoreEntitySet="RentStats">
+          <ScalarProperty Name="EndDatetime" ColumnName="EndDatetime" />
+          <ScalarProperty Name="StartDatetime" ColumnName="StartDatetime" />
           <ScalarProperty Name="RentId" ColumnName="RentId" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="MovieId" ColumnName="MovieId" />

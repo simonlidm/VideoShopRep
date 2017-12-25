@@ -8,6 +8,8 @@ namespace VideoShop
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include
+                            ("~/Scripts/jquery-ui-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -26,6 +28,14 @@ namespace VideoShop
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/Content/themes/base/css").Include(
+                       "~/Content/themes/base/ui.core.css",
+                      "~/ Content/themes/base/autocomplete.css",
+                      "~/Content/themes/base/theme.css",
+                      "~/Content/themes/base/jquery-ui.css",
+                      "~/Content/themes/base/menu.css",
+                      "~/Content/themes/base/button.css",
+                      "~/Content/themes/base/jquery-ui.min.css"));
         }
     }
 }

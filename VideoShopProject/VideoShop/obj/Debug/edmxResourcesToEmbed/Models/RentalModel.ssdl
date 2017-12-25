@@ -24,13 +24,6 @@
     <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Title" Type="varchar(max)" />
   </EntityType>
-  <EntityType Name="Movies">
-    <Key>
-      <PropertyRef Name="MovieId" />
-    </Key>
-    <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar(max)" />
-  </EntityType>
   <EntityType Name="RentReturn">
     <Key>
       <PropertyRef Name="ReturnId" />
@@ -43,10 +36,12 @@
       <PropertyRef Name="RentId" />
     </Key>
     <Property Name="RentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CustomerId" Type="int" />
     <Property Name="MovieId" Type="int" />
-    <Property Name="StartDate" Type="date" />
-    <Property Name="EndDate" Type="date" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" Nullable="false" />
+    <Property Name="StartDatetime" Type="datetime" />
+    <Property Name="EndDatetime" Type="datetime" />
   </EntityType>
   <Association Name="FK_RentReturn_RentStats">
     <End Role="RentStats" Type="Self.RentStats" Multiplicity="0..1" />
@@ -87,7 +82,6 @@
   <EntityContainer Name="MovieDatabaseModelStoreContainer">
     <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RentReturn" EntityType="Self.RentReturn" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RentStats" EntityType="Self.RentStats" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_RentReturn_RentStats" Association="Self.FK_RentReturn_RentStats">
