@@ -35,7 +35,9 @@ namespace VideoShop
                       "~/Content/themes/base/jquery-ui.css",
                       "~/Content/themes/base/menu.css",
                       "~/Content/themes/base/button.css",
-                      "~/Content/themes/base/jquery-ui.min.css"));
+                      "~/Content/themes/base/jquery-ui.min.css",
+                      "~/Content/themes/base/datepicker.css",
+                      "~/Content/themes/base/accordion.css"));
         }
     }
 }

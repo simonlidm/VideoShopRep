@@ -36,6 +36,7 @@ namespace VideoShop.Controllers
             return Json(titles, JsonRequestBehavior.AllowGet);
         }
         // GET: RentStats/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -51,6 +52,7 @@ namespace VideoShop.Controllers
         }
 
         // GET: RentStats/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
           
@@ -139,9 +141,10 @@ namespace VideoShop.Controllers
             ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title", rentStats.MovieId);
             return View(rentStats);
         }
-  
+
 
         // GET: RentStats/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)

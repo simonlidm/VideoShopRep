@@ -27,6 +27,7 @@ namespace VideoShop.Controllers
         }
 
         // GET: RentReturns/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,64 +43,65 @@ namespace VideoShop.Controllers
         }
 
         // GET: RentReturns/Create
-      /*  public ActionResult Create()
-        {
-            ViewBag.RentId = new SelectList(db.RentStats, "RentId", "RentId");
-            return View();
-        }
+        /*  public ActionResult Create()
+          {
+              ViewBag.RentId = new SelectList(db.RentStats, "RentId", "RentId");
+              return View();
+          }
 
-        // POST: RentReturns/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ReturnId,RentId")] RentReturn rentReturn)
-        {
-            if (ModelState.IsValid)
-            {
-                db.RentReturn.Add(rentReturn);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+          // POST: RentReturns/Create
+          // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+          // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+          [HttpPost]
+          [ValidateAntiForgeryToken]
+          public ActionResult Create([Bind(Include = "ReturnId,RentId")] RentReturn rentReturn)
+          {
+              if (ModelState.IsValid)
+              {
+                  db.RentReturn.Add(rentReturn);
+                  db.SaveChanges();
+                  return RedirectToAction("Index");
+              }
 
-            ViewBag.RentId = new SelectList(db.RentStats, "RentId", "RentId", rentReturn.RentId);
-            return View(rentReturn);
-        }
-*/
+              ViewBag.RentId = new SelectList(db.RentStats, "RentId", "RentId", rentReturn.RentId);
+              return View(rentReturn);
+          }
+  */
         // GET: RentReturns/Edit/5
-     /*   public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RentReturn rentReturn = db.RentReturn.Find(id);
-            if (rentReturn == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.RentId = new SelectList(db.RentStats, "RentId", "RentId", rentReturn.RentId);
-            return View(rentReturn);
-        }
-        
-        // POST: RentReturns/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ReturnId,RentId")] RentReturn rentReturn)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(rentReturn).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.RentId = new SelectList(db.RentStats, "RentId", "RentId", rentReturn.RentId);
-            return View(rentReturn);
-        }
-        */
+        /*   public ActionResult Edit(int? id)
+           {
+               if (id == null)
+               {
+                   return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+               }
+               RentReturn rentReturn = db.RentReturn.Find(id);
+               if (rentReturn == null)
+               {
+                   return HttpNotFound();
+               }
+               ViewBag.RentId = new SelectList(db.RentStats, "RentId", "RentId", rentReturn.RentId);
+               return View(rentReturn);
+           }
+
+           // POST: RentReturns/Edit/5
+           // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+           // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+           [HttpPost]
+           [ValidateAntiForgeryToken]
+           public ActionResult Edit([Bind(Include = "ReturnId,RentId")] RentReturn rentReturn)
+           {
+               if (ModelState.IsValid)
+               {
+                   db.Entry(rentReturn).State = EntityState.Modified;
+                   db.SaveChanges();
+                   return RedirectToAction("Index");
+               }
+               ViewBag.RentId = new SelectList(db.RentStats, "RentId", "RentId", rentReturn.RentId);
+               return View(rentReturn);
+           }
+           */
         // GET: RentReturns/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
