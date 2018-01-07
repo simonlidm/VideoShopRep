@@ -15,7 +15,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#getvalue').autocomplete({
-            source: '@Url.Action("GetTitle")'
+            source: '@Url.Action("GetTitle")',
+            minLength: 2
         });
     })
 </script>

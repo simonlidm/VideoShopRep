@@ -1,0 +1,22 @@
+﻿@model IEnumerable<VideoShop.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Movies</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="ui-widget">
+    <input class="form-control" type="text" id="getvalue" name="getvalue" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#getvalue').autocomplete({
+            source: '@Url.Action("GetTitle")',
+            minLength: 2
+        });
+    })
+</script>

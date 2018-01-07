@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MovieDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Company" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+    <Property Name="Fax" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RentStats" Relationship="Self.FK_RentStats_Customer" FromRole="Customer" ToRole="RentStats" />
+  </EntityType>
+  <EntityType Name="Movie">
+    <Key>
+      <PropertyRef Name="MovieId" />
+    </Key>
+    <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="RentStats" Relationship="Self.FK_RentStats_Movie" FromRole="Movie" ToRole="RentStats" />
+  </EntityType>
+  <EntityType Name="RentReturn">
+    <Key>
+      <PropertyRef Name="ReturnId" />
+    </Key>
+    <Property Name="ReturnId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RentId" Type="Int32" />
+    <NavigationProperty Name="RentStats" Relationship="Self.FK_RentReturn_RentStats" FromRole="RentReturn" ToRole="RentStats" />
+  </EntityType>
+  <EntityType Name="RentStats">
+    <Key>
+      <PropertyRef Name="RentId" />
+    </Key>
+    <Property Name="RentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="MovieId" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" Nullable="false" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK_RentStats_Customer" FromRole="RentStats" ToRole="Customer" />
+    <NavigationProperty Name="Movie" Relationship="Self.FK_RentStats_Movie" FromRole="RentStats" ToRole="Movie" />
+    <NavigationProperty Name="RentReturn" Relationship="Self.FK_RentReturn_RentStats" FromRole="RentStats" ToRole="RentReturn" />
+    <Property Name="StartDatetime" Type="DateTime" Precision="3" />
+    <Property Name="EndDatetime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK_RentStats_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="RentStats" Type="Self.RentStats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="RentStats">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentStats_Movie">
+    <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+    <End Role="RentStats" Type="Self.RentStats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="MovieId" />
+      </Principal>
+      <Dependent Role="RentStats">
+        <PropertyRef Name="MovieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentReturn_RentStats">
+    <End Role="RentStats" Type="Self.RentStats" Multiplicity="0..1" />
+    <End Role="RentReturn" Type="Self.RentReturn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RentStats">
+        <PropertyRef Name="RentId" />
+      </Principal>
+      <Dependent Role="RentReturn">
+        <PropertyRef Name="RentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MovieDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customer" EntityType="Self.Customer" />
+    <EntitySet Name="Movie" EntityType="Self.Movie" />
+    <EntitySet Name="RentReturn" EntityType="Self.RentReturn" />
+    <EntitySet Name="RentStats" EntityType="Self.RentStats" />
+    <AssociationSet Name="FK_RentStats_Customer" Association="Self.FK_RentStats_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="RentStats" EntitySet="RentStats" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentStats_Movie" Association="Self.FK_RentStats_Movie">
+      <End Role="Movie" EntitySet="Movie" />
+      <End Role="RentStats" EntitySet="RentStats" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentReturn_RentStats" Association="Self.FK_RentReturn_RentStats">
+      <End Role="RentStats" EntitySet="RentStats" />
+      <End Role="RentReturn" EntitySet="RentReturn" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

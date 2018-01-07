@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MovieDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="40" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="20" />
+    <Property Name="Company" Type="nvarchar" MaxLength="80" />
+    <Property Name="Address" Type="nvarchar" MaxLength="70" />
+    <Property Name="City" Type="nvarchar" MaxLength="40" />
+    <Property Name="State" Type="nvarchar" MaxLength="40" />
+    <Property Name="Country" Type="nvarchar" MaxLength="40" />
+    <Property Name="PostalCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="24" />
+    <Property Name="Fax" Type="nvarchar" MaxLength="24" />
+    <Property Name="Email" Type="nvarchar" MaxLength="60" />
+  </EntityType>
+  <EntityType Name="Movie">
+    <Key>
+      <PropertyRef Name="MovieId" />
+    </Key>
+    <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="RentReturn">
+    <Key>
+      <PropertyRef Name="ReturnId" />
+    </Key>
+    <Property Name="ReturnId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RentId" Type="int" />
+  </EntityType>
+  <EntityType Name="RentStats">
+    <Key>
+      <PropertyRef Name="RentId" />
+    </Key>
+    <Property Name="RentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MovieId" Type="int" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" Nullable="false" />
+    <Property Name="StartDatetime" Type="datetime" />
+    <Property Name="EndDatetime" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_RentReturn_RentStats">
+    <End Role="RentStats" Type="Self.RentStats" Multiplicity="0..1" />
+    <End Role="RentReturn" Type="Self.RentReturn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RentStats">
+        <PropertyRef Name="RentId" />
+      </Principal>
+      <Dependent Role="RentReturn">
+        <PropertyRef Name="RentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentStats_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="RentStats" Type="Self.RentStats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="RentStats">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentStats_Movie">
+    <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+    <End Role="RentStats" Type="Self.RentStats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="MovieId" />
+      </Principal>
+      <Dependent Role="RentStats">
+        <PropertyRef Name="MovieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MovieDatabaseModelStoreContainer">
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentReturn" EntityType="Self.RentReturn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentStats" EntityType="Self.RentStats" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_RentReturn_RentStats" Association="Self.FK_RentReturn_RentStats">
+      <End Role="RentStats" EntitySet="RentStats" />
+      <End Role="RentReturn" EntitySet="RentReturn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentStats_Customer" Association="Self.FK_RentStats_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="RentStats" EntitySet="RentStats" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentStats_Movie" Association="Self.FK_RentStats_Movie">
+      <End Role="Movie" EntitySet="Movie" />
+      <End Role="RentStats" EntitySet="RentStats" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
