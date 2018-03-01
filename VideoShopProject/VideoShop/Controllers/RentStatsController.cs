@@ -1,10 +1,12 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using VideoShop.Models;
@@ -22,19 +24,16 @@ namespace VideoShop.Controllers
         
         // GET: RentStats
         [Authorize(Roles ="Admin")]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
+            
             var rentStats = db.RentStats.Include(r => r.Customer).Include(r => r.Movie);
-            return View(rentStats.ToList());
-        }
+            return (View(rentStats.ToList().ToPagedList(pageNumber: page ?? 1,
+    pageSize: 5)));
 
-        public JsonResult GetTitle(string term)
-        {
-            var titles = from t in db.Movie
-                         where t.Title.ToLower().StartsWith(term)
-                         select t.Title;
-            return Json(titles, JsonRequestBehavior.AllowGet);
         }
+       
+     
         // GET: RentStats/Details/5
         [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
@@ -53,11 +52,12 @@ namespace VideoShop.Controllers
 
         // GET: RentStats/Create
         [Authorize(Roles = "Admin")]
-        public ActionResult Create()
+        [HttpGet]
+        public  ActionResult Create()
         {
           
             ViewBag.CustomerId = new SelectList(db.Customer, "CustomerId", "FirstName");
-            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title").OrderBy(x=>x.Text).Skip(10000).Take(10000);
+            ViewBag.MovieId =  new  SelectList(db.Movie, "MovieId", "Title").Take(2000);
             return View();
         }
    
@@ -68,35 +68,21 @@ namespace VideoShop.Controllers
                 if (db.RentStats.Any(x => x.EndDate >= rentStats.StartDate && x.MovieId == rentStats.MovieId&&x.CustomerId==rentStats.CustomerId
                 )|| db.RentStats.Any(x=>x.MovieId == rentStats.MovieId && x.EndDate >= rentStats.StartDate) )
                 {
-              
-                
                     error = true;
                     TempData["message"] = "The movie is already being rented!";
                 
-                  
-
-
-
                 }
                 if (db.RentStats.Any(x => x.MovieId == rentStats.MovieId && x.StartDate == rentStats.StartDate && x.EndDate == rentStats.EndDate&&x.CustomerId ==rentStats.CustomerId))
                 {
-             
-               
-                    error = true;
+
+                     error = true;
                     TempData["message"] = "This rental is a duplicate and already exist";
-                
-                
-
-
                 }
                 if (rentStats.StartDate < DateTime.Now.Date || rentStats.StartDate > DateTime.Now.Date)
                 {
 
-
                     error = true;
                     TempData["message"] = "Invalid date!";
-
-
                 }
             
             return error;
@@ -129,11 +115,6 @@ namespace VideoShop.Controllers
                 }
               
                 return RedirectToAction("Index");
-                
-               
-                 
-                
-
 
             }
 
@@ -157,7 +138,7 @@ namespace VideoShop.Controllers
                 return HttpNotFound();
             }
             ViewBag.CustomerId = new SelectList(db.Customer, "CustomerId", "FirstName", rentStats.CustomerId);
-            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title", rentStats.MovieId).OrderBy(x => x.Text).Skip(10000).Take(10000);
+            ViewBag.MovieId = new SelectList(db.Movie, "MovieId", "Title", rentStats.MovieId).OrderBy(x => x.Text);
             return View(rentStats);
         }
 

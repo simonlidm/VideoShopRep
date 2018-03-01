@@ -12,6 +12,13 @@
         <AssociationConnector Association="MovieDatabaseModel.FK_RentStats_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="MovieDatabaseModel.FK_RentStats_Movie" ManuallyRouted="false" />
         <AssociationConnector Association="MovieDatabaseModel.FK_RentReturn_RentStats" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MovieDatabaseModel.AspNetRoles" Width="1.5" PointX="3.375" PointY="7.5" />
+        <EntityTypeShape EntityType="MovieDatabaseModel.AspNetUserClaims" Width="1.5" PointX="7.875" PointY="8.625" />
+        <EntityTypeShape EntityType="MovieDatabaseModel.AspNetUserLogins" Width="1.5" PointX="7.875" PointY="6" />
+        <EntityTypeShape EntityType="MovieDatabaseModel.AspNetUsers" Width="1.5" PointX="5.625" PointY="6.375" />
+        <AssociationConnector Association="MovieDatabaseModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="MovieDatabaseModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="MovieDatabaseModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

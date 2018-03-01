@@ -1,8 +1,11 @@
-﻿@model IEnumerable<VideoShop.Models.RentStats>
-<style>    .highlighted {
+﻿
+@model PagedList.IPagedList<VideoShop.Models.RentStats>
+@using PagedList.Mvc;
+<style>
+    .highlighted {
         background-color: rgba(255, 0,0,0.6);
-        
-    }</style>
+    }
+</style>
 <style>
     .highlighted2 {
         background-color: rgba(0, 255,0,0.3);
@@ -13,14 +16,20 @@
 }
 
 <h2>Rented Movies</h2>
-<div class="alert-danger fade in"><a href="https://localhost:44381/RentStats"  class="close" data-dismiss="alert">&times;</a>
+<div class="alert-danger fade in">
+    <a href="https://localhost:44381/RentStats" class="close" data-dismiss="alert">&times;</a>
     <strong>@TempData["message"]</strong>
-    </div>
+</div>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@Html.PagedListPager(Model,
+  page => Url.Action("Index", new { page }))
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+ of @Model.PageCount
 <table class="table">
-    
+
     <tr>
         <th>
             Start Date
@@ -29,7 +38,7 @@
             End Date
         </th>
         <th>
-           Return Time
+            Return Time
         </th>
         <th>
             First Name
@@ -38,69 +47,69 @@
             Last Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Movie.Title)
+            Title
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model)
-{
-    if (DateTime.Now.Date > item.EndDate)
+    @foreach (var item in Model)
     {
-        <tr class="highlighted">
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Movie.Title)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.RentId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.RentId })
+        if (DateTime.Now.Date > item.EndDate)
+        {
+            <tr class="highlighted">
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDatetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDatetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movie.Title)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RentId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.RentId })
 
-            </td>
-        </tr>
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr class="highlighted2">
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDatetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDatetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movie.Title)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RentId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.RentId })
+
+                </td>
+            </tr>
+        }
     }
-    else
-    {
-    <tr class="highlighted2">
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customer.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customer.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Movie.Title)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.RentId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.RentId }) 
-          
-        </td>
-    </tr>
-    }
-}
 
 </table>

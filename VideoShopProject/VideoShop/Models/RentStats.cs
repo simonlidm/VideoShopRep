@@ -11,8 +11,7 @@ namespace VideoShop.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class RentStats
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,7 +24,6 @@ namespace VideoShop.Models
         public Nullable<int> CustomerId { get; set; }
         public Nullable<int> MovieId { get; set; }
         public System.DateTime StartDate { get; set; }
-        [Required]
         public System.DateTime EndDate { get; set; }
         public Nullable<System.DateTime> StartDatetime { get; set; }
         public Nullable<System.DateTime> EndDatetime { get; set; }

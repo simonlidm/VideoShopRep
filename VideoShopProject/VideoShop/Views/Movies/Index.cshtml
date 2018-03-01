@@ -1,22 +1,125 @@
-﻿@model IEnumerable<VideoShop.Models.Movie>
-
+﻿
+@model PagedList.IPagedList<VideoShop.Models.Movie>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
 }
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtMovie').autocomplete({
+            maxShowItems: 10,
+            source: function (request, response) {
+                var autocompleteUrl = '/api/RestMovies' + '?prefix=' + request.term;
+                $.ajax({
+                    url: autocompleteUrl,
+                    type: 'POST',
+                    cache: false,
+                    dataType: 'json',
+                    success: function (json) {
+                        response($.map(json, function (data, id) {
+                            return {
+                                label: data.Title,
+                                value: data.Title
+                            };
+                        }));
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        console.log('some error occured', textStatus, errorThrown);
+                    }
+                });
+            },
+            select: function (e, i) {
+                $("#hfMovie").val(i.item.val);
+               
+            },
+            minLength: 5
+        });
+    });
+</script>
 <h2>Movies</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<div class="ui-widget">
-    <input class="form-control" type="text" id="getvalue" name="getvalue" />
-</div>
-<script type="text/javascript">
+
+
+
+
+@using (Html.BeginForm("Index", "Movies", FormMethod.Post))
+{
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="input-group">
+                    @Html.TextBox("Title", ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "form-control",  id = "txtMovie", name = "Title"  ,placeholder = "Type title here..." })
+
+                    <input type="hidden" id="hfMovie" name="MovieId" />
+                    <div class="input-group-btn">
+                        <div class="btn-group">
+                            <input class="btn btn-primary" type="submit" id="btnSubmit" value="Submit" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br /><br />
+
+}
+
+
+
+
+<table class="table">
+
+    <tr>
+
+        <th>
+            @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter })
+
+        </th>
+        <th></th>
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MovieId })|
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MovieId })
+
+                </td>
+            </tr>
+
+        }
+
+    }
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+<!--<script type="text/javascript">
     $(document).ready(function () {
         $('#getvalue').autocomplete({
             source: '@Url.Action("GetTitle")',
-            minLength: 2
+            minLength: 3,
+            select: function (event, ui) {
+                $("#getvalue").val(ui.item.label);
+                $("#movieid").val(ui.item.value);
+
+
+                return false;
+
         });
     })
-</script>
+</script>-->

@@ -11,12 +11,10 @@ namespace VideoShop.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class RentReturn
     {
         public int ReturnId { get; set; }
-       
         public Nullable<int> RentId { get; set; }
     
         public virtual RentStats RentStats { get; set; }

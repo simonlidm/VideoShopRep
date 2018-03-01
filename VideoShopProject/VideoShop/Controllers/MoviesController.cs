@@ -1,3 +1,4 @@
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,42 +18,65 @@ namespace VideoShop.Controllers
         // GET: Movies
         [Authorize(Roles = "ExternalUser,Admin")]
 
-        public ActionResult Index()
+        public ViewResult Index(string sortOrder, string currentFilter, string Title, int? page)
         {
-            return View();
-        }
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.TitleSortParm = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
 
-        public JsonResult GetTitle(string term)
-        {
-            var titles = from t in db.Movie
-                         where t.Title.ToLower().StartsWith(term)
-                         select t.Title;
-            return Json(titles, JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult OrderByTitle()
-        {
+
+            if (Title != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                Title = currentFilter;
+            }
+            if(Title == null)
+            {
+                ViewBag.CurrentFilter = "";
+            }
+            else
+            ViewBag.CurrentFilter = Title;
+
             var movies = from m in db.Movie
-                         orderby m.Title ascending
                          select m;
-            return View(movies.Take(1000));
-        }
+            if (!String.IsNullOrEmpty(Title))
+            {
+                movies = movies.Where(s => s.Title.StartsWith(Title));
+            }
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    movies = movies.OrderByDescending(s => s.Title);
+                    break;
+                default:  // Name ascending 
+                    movies = movies.OrderBy(s => s.Title);
+                    break;
+            }
 
-        // GET: Movies/Details/5
-       /*  [Authorize(Roles = "ExternalUser,Admin")]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Movie movie = db.Movie.Find(id);
-            if (movie == null)
-            {
-                return HttpNotFound();
-            }
-            return View(movie);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(movies.ToPagedList(pageNumber, pageSize));
         }
-        */
+       
+    
+        // GET: Movies/Details/5
+        /*  [Authorize(Roles = "ExternalUser,Admin")]
+         public ActionResult Details(int? id)
+         {
+             if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             Movie movie = db.Movie.Find(id);
+             if (movie == null)
+             {
+                 return HttpNotFound();
+             }
+             return View(movie);
+         }
+         */
         // GET: Movies/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
@@ -78,7 +102,7 @@ namespace VideoShop.Controllers
         }
 
         // GET: Movies/Edit/5
-       /* [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -108,7 +132,7 @@ namespace VideoShop.Controllers
             }
             return View(movie);
         }
-
+        
         // GET: Movies/Delete/5
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
@@ -135,7 +159,7 @@ namespace VideoShop.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        */
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

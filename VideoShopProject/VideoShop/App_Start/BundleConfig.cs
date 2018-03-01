@@ -10,6 +10,8 @@ namespace VideoShop
         {
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include
                             ("~/Scripts/jquery-ui-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui.autocomplete.scroll").Include
+                ("~/Scripts/jquery.ui.autocomplete.scroll.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
